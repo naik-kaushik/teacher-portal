@@ -280,6 +280,7 @@ app.post("/create-quiz", function (req, res) {
   );
   const newQuiz = new Quiz({
     title: req.body.title,
+    subject : req.body.sub,
     instructions: req.body.instructions,
     author: req.user.username,
     questions: qa,
