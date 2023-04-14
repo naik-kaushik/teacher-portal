@@ -294,5 +294,20 @@ app.post("/create-quiz", function (req, res) {
     });
   });
 });
+
+app.post("/dashboard", (req, res) => {
+  const sub = req.body.selected;
+  // console.log(sub);
+  if (req.isAuthenticated()) {
+    DetUser.findOne({ username: req.user.username }).then((user) => {
+      Quiz.find({ author: req.user.username, subject: sub }).then((qz) => {
+        // console.log(qz);
+        res.render("dashboard", { user: user, quizzes: qz });
+      });
+    });
+  } else {
+    res.render("login", { msg: "To see Dashboard, Log In First!" });
+  }
+});
 const port = process.env.PORT || 3000;
 app.listen(port, console.log(`listening on ${port}`));
